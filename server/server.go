@@ -231,6 +231,13 @@ func (s *Server) HTTPHandler() http.Handler {
 		keysFunc:  s.KeyManager.PublicKeys,
 	})
 
+	mux.Handle(httpPathAcceptInvitation, &InvitationHandler{
+		tpl:       s.ResetPasswordTemplate,
+		issuerURL: s.IssuerURL,
+		um:        s.UserManager,
+		keysFunc:  s.KeyManager.PublicKeys,
+	})
+
 	mux.HandleFunc(httpPathDebugVars, health.ExpvarHandler)
 
 	pcfg := s.ProviderConfig()

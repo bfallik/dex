@@ -45,7 +45,7 @@ const (
 func assertStringClaim(claims jose.Claims, k string) string {
 	s, ok, err := claims.StringClaim(k)
 	if !ok || err != nil {
-		panic("claims were not validated correctly")
+		panic(fmt.Sprintf("claims were not validated correctly, missing or wrong claim: %v", k))
 	}
 	return s
 }
@@ -54,7 +54,7 @@ func assertURLClaim(claims jose.Claims, k string) *url.URL {
 	ustring := assertStringClaim(claims, k)
 	ret, err := url.Parse(ustring)
 	if err != nil {
-		panic("url claim was not validated correctly")
+		panic(fmt.Sprintf("url claim was not validated correctly: %v", k))
 	}
 	return ret
 }
